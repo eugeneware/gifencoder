@@ -2,8 +2,6 @@
 
 Server side animated (and non-animated) gif generation for node.js
 
-[![build status](https://secure.travis-ci.org/eugeneware/gifencoder.png)](http://travis-ci.org/eugeneware/gifencoder)
-
 This code is based on the fine work of the following developers, but adds
 server-side generation with [node-canvas](https://github.com/learnboost/node-canvas)
 and support for node.js Buffers:
