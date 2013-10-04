@@ -10,7 +10,7 @@ and support for node.js Buffers:
 
 * Kevin Weiner (original Java version - kweiner@fmsware.com)
 * Thibault Imbert (AS3 version - bytearray.org)
-* Johan Nordberg (JS version - code@johan-nordberg.com)
+* Johan Nordberg ([gif.js](http://jnordberg.github.io/gif.js/) - code@johan-nordberg.com)
 
 ## Installation
 
