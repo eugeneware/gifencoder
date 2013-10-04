@@ -1,7 +1,7 @@
 {
   "name": "gifencoder",
   "version": "0.0.1",
-  "description": "Server side gif generation for node.js",
+  "description": "Server side animated gif generation for node.js",
   "main": "index.js",
   "scripts": {
     "test": "node_modules/.bin/grunt ci"
