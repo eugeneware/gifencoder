@@ -10,9 +10,13 @@ function getData(ctx, width, height) {
   return ctx.getImageData(0, 0, width || ctx.canvas.width, height || ctx.canvas.height).data;
 }
 
+function fixtures(file) {
+  return path.join(__dirname, 'fixtures', file);
+}
+
 describe('GIFEncoder', function() {
   it('should be able to Generate a PNG', function(done) {
-    var buf = fs.readFileSync(path.join(__dirname, 'fixtures', 'in.png'));
+    var buf = fs.readFileSync(fixtures('in.png'));
     var img = new Canvas.Image();
     img.src = buf;
 
@@ -38,7 +42,7 @@ describe('GIFEncoder', function() {
 
     encoder.finish();
     var out = encoder.stream().getData();
-    var expected = fs.readFileSync(path.join(__dirname, 'fixtures', 'out.gif'));
+    var expected = fs.readFileSync(fixtures('out.gif'));
 
     expect(out).to.eql(expected);
 
@@ -46,7 +50,7 @@ describe('GIFEncoder', function() {
   });
 
   it('should expose a read streaming interface', function(done) {
-    var buf = fs.readFileSync(path.join(__dirname, 'fixtures', 'in.png'));
+    var buf = fs.readFileSync(fixtures('in.png'));
     var img = new Canvas.Image();
     img.src = buf;
 
@@ -55,7 +59,7 @@ describe('GIFEncoder', function() {
 
     var encoder = new GIFEncoder(img.width, img.height);
     encoder.createReadStream().pipe(concat(function (data) {
-      var expected = fs.readFileSync(path.join(__dirname, 'fixtures', 'out.gif'));
+      var expected = fs.readFileSync(fixtures('out.gif'));
       expect(data).to.eql(expected);
       done();
     }));
@@ -80,7 +84,7 @@ describe('GIFEncoder', function() {
   });
 
   it('should expose a write streaming interface', function(done) {
-    var buf = fs.readFileSync(path.join(__dirname, 'fixtures', 'in.png'));
+    var buf = fs.readFileSync(fixtures('in.png'));
     var img = new Canvas.Image();
     img.src = buf;
 
@@ -89,7 +93,7 @@ describe('GIFEncoder', function() {
 
     var encoder = new GIFEncoder(img.width, img.height);
     encoder.createReadStream().pipe(concat(function (data) {
-      var expected = fs.readFileSync(path.join(__dirname, 'fixtures', 'out.gif'));
+      var expected = fs.readFileSync(fixtures('out.gif'));
       expect(data).to.eql(expected);
       done();
     }));
@@ -125,7 +129,7 @@ describe('GIFEncoder', function() {
       }
     };
 
-    var buf = fs.readFileSync(path.join(__dirname, 'fixtures', 'in.png'));
+    var buf = fs.readFileSync(fixtures('in.png'));
     var img = new Canvas.Image();
     img.src = buf;
 
@@ -134,7 +138,7 @@ describe('GIFEncoder', function() {
 
     var encoder = new GIFEncoder(img.width, img.height);
     encoder.createReadStream().pipe(concat(function (data) {
-      var expected = fs.readFileSync(path.join(__dirname, 'fixtures', 'out.gif'));
+      var expected = fs.readFileSync(fixtures('out.gif'));
       expect(data).to.eql(expected);
       done();
     }));
