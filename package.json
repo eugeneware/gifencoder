@@ -42,6 +42,7 @@
     "concat-stream": "~1.0.1",
     "png-js": "~0.1.1",
     "after": "~0.8.1",
-    "range": "0.0.2"
+    "range": "0.0.2",
+    "png-file-stream": "0.0.1"
   }
 }
