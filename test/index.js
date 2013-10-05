@@ -4,6 +4,9 @@ var expect = require('expect.js'),
     Canvas = require('canvas'),
     concat = require('concat-stream'),
     stream = require('stream'),
+    png = require('png-js'),
+    after = require('after'),
+    range = require('range'),
     GIFEncoder = require('..');
 
 function getData(ctx, width, height) {
@@ -12,6 +15,10 @@ function getData(ctx, width, height) {
 
 function fixtures(file) {
   return path.join(__dirname, 'fixtures', file);
+}
+
+function root(file) {
+  return path.join(__dirname, '..', file);
 }
 
 describe('GIFEncoder', function() {
@@ -98,7 +105,6 @@ describe('GIFEncoder', function() {
       done();
     }));
 
-    encoder.start();
     encoder.setRepeat(-1);
     encoder.setDelay(500);
     encoder.setQuality(10);
@@ -143,7 +149,6 @@ describe('GIFEncoder', function() {
       done();
     }));
 
-    encoder.start();
     encoder.setRepeat(-1);
     encoder.setDelay(500);
     encoder.setQuality(10);
@@ -162,5 +167,49 @@ describe('GIFEncoder', function() {
     frames.push(getData(ctx));
 
     rs.pipe(ws);
+  });
+
+  it('should pipe with png file bitmaps', function(done) {
+    function createReadStream() {
+      var rs = new stream.Readable({ objectMode: true });
+      rs._read = function () { };
+
+      var n = 3;
+      var next = after(n, finish);
+      var frames = [];
+      range(0, n).forEach(function (i) {
+        png.decode(fixtures('frame' + i + '.png'), function (pixels) {
+          frames[i] = pixels;
+          next();
+        });
+      });
+
+      function finish() {
+        (function next() {
+          if (frames.length) {
+            rs.push(frames.shift());
+            setImmediate(next);
+          } else {
+            rs.push(null);
+          }
+        })();
+      }
+
+      return rs;
+    }
+
+    var encoder = new GIFEncoder(854, 480);
+    encoder.createReadStream().pipe(concat(function (data) {
+      var expected = fs.readFileSync(fixtures('out.gif'));
+      expect(data).to.eql(expected);
+      done();
+    }));
+
+    encoder.setRepeat(-1);
+    encoder.setDelay(500);
+    encoder.setQuality(10);
+
+    var ws = encoder.createWriteStream();
+    createReadStream().pipe(ws);
   });
 });
