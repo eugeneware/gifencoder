@@ -62,7 +62,7 @@ The above code will render an image like:
 
 ![Animated GIF](https://raw.github.com/eugeneware/gifencoder/master/examples/myanimated.gif)
 
-## Streaming API
+## Streaming API - Reads
 
 You can also use a streaming API to receive data:
 
@@ -101,3 +101,19 @@ encoder.addFrame(ctx);
 
 encoder.finish();
 ```
+
+## Streaming API - Writes
+
+You can also stream writes of pixel data (or canvas contexts) to the encoder:
+
+``` js
+var GIFEncoder = require('gifencoder');
+var encoder = new GIFEncoder(854, 480);
+var bitMapStream = makeMyBitMaps(); // read stream that creates RGBA 1-dimensional bitmaps
+bitMapStream
+  .pipe(encoder.createWriteStream({ repeat: -1, delay: 500, quality: 10 }))
+  .pipe(fs.createWriteStream('myanimated.gif'));
+```
+
+NB: The chunks that get emitted by your read stream must either by a 1-dimensional bitmap of RGBA
+data (either an array or Buffer), or a canvas 2D `context`.

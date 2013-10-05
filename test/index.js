@@ -213,7 +213,7 @@ describe('GIFEncoder', function() {
     createReadStream().pipe(ws);
   });
 
-  it.only('should pipe with write options', function(done) {
+  it('should pipe with write options', function(done) {
     function createReadStream() {
       var rs = new stream.Readable({ objectMode: true });
       rs._read = function () { };
@@ -251,5 +251,44 @@ describe('GIFEncoder', function() {
 
     var ws = encoder.createWriteStream({ repeat: -1, delay: 500, quality: 10 });
     createReadStream().pipe(ws);
+  });
+
+  it('should pipe a through stream', function(done) {
+    function createReadStream() {
+      var rs = new stream.Readable({ objectMode: true });
+      rs._read = function () { };
+
+      var n = 3;
+      var next = after(n, finish);
+      var frames = [];
+      range(0, n).forEach(function (i) {
+        png.decode(fixtures('frame' + i + '.png'), function (pixels) {
+          frames[i] = pixels;
+          next();
+        });
+      });
+
+      function finish() {
+        (function next() {
+          if (frames.length) {
+            rs.push(frames.shift());
+            setImmediate(next);
+          } else {
+            rs.push(null);
+          }
+        })();
+      }
+
+      return rs;
+    }
+
+    var encoder = new GIFEncoder(854, 480);
+    createReadStream()
+      .pipe(encoder.createWriteStream({ repeat: -1, delay: 500, quality: 10 }))
+      .pipe(concat(function (data) {
+        var expected = fs.readFileSync(fixtures('out.gif'));
+        expect(data).to.eql(expected);
+        done();
+      }));
   });
 });
