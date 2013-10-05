@@ -23,8 +23,9 @@ $ npm install gifencoder
 You can also stream writes of pixel data (or canvas contexts) to the encoder:
 
 ``` js
-var pngFileStream = require('png-file-stream');
+var GIFEncoder = require('gifencoder');
 var encoder = new GIFEncoder(854, 480);
+var pngFileStream = require('png-file-stream');
 
 pngFileStream('test/**/frame?.png')
   .pipe(encoder.createWriteStream({ repeat: -1, delay: 500, quality: 10 }))
