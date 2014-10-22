@@ -29,7 +29,7 @@ encoder.addFrame(ctx);
 
 encoder.finish();
 
-var buf = encoder.stream().getData();
+var buf = encoder.out.getData();
 fs.writeFile('myanimated.gif', buf, function (err) {
   // animated GIF written to myanimated.gif
 });
