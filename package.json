@@ -1,6 +1,6 @@
 {
   "name": "gifencoder",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Streaming server-side animated (and non-animated) gif generation for node.js",
   "main": "index.js",
   "scripts": {
