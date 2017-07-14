@@ -32,7 +32,7 @@
   "dependencies": {},
   "devDependencies": {
     "after": "~0.8.1",
-    "canvas": "^1.6.4",
+    "canvas-prebuilt": "^1.6.5-prerelease.1",
     "concat-stream": "^1.4.6",
     "expect.js": "^0.3.1",
     "mocha": "^3.4.2",

@@ -1,7 +1,7 @@
 var expect = require('expect.js'),
     fs = require('fs'),
     path = require('path'),
-    Canvas = require('canvas'),
+    Canvas = require('canvas-prebuilt'),
     concat = require('concat-stream'),
     stream = require('stream'),
     png = require('png-js'),
