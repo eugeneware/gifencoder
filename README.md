@@ -2,6 +2,8 @@
 
 Streaming server-side animated (and non-animated) gif generation for node.js
 
+[![build status](https://secure.travis-ci.org/eugeneware/gifencoder.png)](http://travis-ci.org/eugeneware/gifencoder)
+
 ## Installation
 
 This module is installed via npm:
