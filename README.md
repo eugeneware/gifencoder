@@ -22,9 +22,19 @@ var encoder = new GIFEncoder(854, 480);
 var pngFileStream = require('png-file-stream');
 var fs = require('fs');
 
-pngFileStream('test/**/frame?.png')
+var stream = pngFileStream('test/**/frame?.png')
   .pipe(encoder.createWriteStream({ repeat: -1, delay: 500, quality: 10 }))
   .pipe(fs.createWriteStream('myanimated.gif'));
+
+stream.on('finish', function () {
+  // Process generated GIF
+});
+
+// Alternately, you can wrap the "finish" event in a Promise
+await new Promise((resolve, reject) => {
+  stream.on('finish', resolve);
+  stream.on('error', reject);
+});
 ```
 
 NB: The chunks that get emitted by your read stream must either by a 1-dimensional bitmap of RGBA
