@@ -1,10 +1,8 @@
 language: node_js
 dist: trusty
 node_js:
-  - "4"
-  - "6"
-  - "7"
-  - "8"
+  - node
+  - lts/*
 addons:
   apt:
     sources:

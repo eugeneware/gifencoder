@@ -1,14 +1,15 @@
-var expect = require('expect.js'),
-    fs = require('fs'),
-    path = require('path'),
-    Canvas = require('canvas'),
-    concat = require('concat-stream'),
-    stream = require('stream'),
-    png = require('png-js'),
-    after = require('after'),
-    range = require('range'),
-    pngFileStream = require('png-file-stream'),
-    GIFEncoder = require('..');
+const expect = require('expect.js');
+const fs = require('fs');
+const path = require('path');
+const Canvas = require('canvas');
+const concat = require('concat-stream');
+const stream = require('stream');
+const png = require('png-js');
+const after = require('after');
+const { range } = require('range');
+const pngFileStream = require('png-file-stream');
+const GIFEncoder = require('..');
+const { createCanvas, Image } = require('canvas')
 
 function getData(ctx, width, height) {
   return ctx.getImageData(0, 0, width || ctx.canvas.width, height || ctx.canvas.height).data;
@@ -25,10 +26,10 @@ function root(file) {
 describe('GIFEncoder', function() {
   it('should expose a read streaming interface', function(done) {
     var buf = fs.readFileSync(fixtures('in.png'));
-    var img = new Canvas.Image();
+    var img = new Image();
     img.src = buf;
 
-    var canvas = new Canvas(img.width, img.height);
+    var canvas = createCanvas(img.width, img.height);
     var ctx = canvas.getContext('2d');
 
     var encoder = new GIFEncoder(img.width, img.height);
@@ -59,10 +60,10 @@ describe('GIFEncoder', function() {
 
   it('should expose a write streaming interface', function(done) {
     var buf = fs.readFileSync(fixtures('in.png'));
-    var img = new Canvas.Image();
+    var img = new Image();
     img.src = buf;
 
-    var canvas = new Canvas(img.width, img.height);
+    var canvas = createCanvas(img.width, img.height);
     var ctx = canvas.getContext('2d');
 
     var encoder = new GIFEncoder(img.width, img.height);
@@ -103,10 +104,10 @@ describe('GIFEncoder', function() {
     };
 
     var buf = fs.readFileSync(fixtures('in.png'));
-    var img = new Canvas.Image();
+    var img = new Image();
     img.src = buf;
 
-    var canvas = new Canvas(img.width, img.height);
+    var canvas = createCanvas(img.width, img.height);
     var ctx = canvas.getContext('2d');
 
     var encoder = new GIFEncoder(img.width, img.height);
