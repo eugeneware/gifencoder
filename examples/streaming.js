@@ -1,8 +1,8 @@
-var GIFEncoder = require('..');
-var Canvas = require('canvas');
-var fs = require('fs');
+const GIFEncoder = require('..');
+const { createCanvas } = require('canvas');
+const fs = require('fs');
 
-var encoder = new GIFEncoder(320, 240);
+const encoder = new GIFEncoder(320, 240);
 // stream the results as they are available into myanimated.gif
 encoder.createReadStream().pipe(fs.createWriteStream('myanimated.gif'));
 
@@ -12,8 +12,8 @@ encoder.setDelay(500);  // frame delay in ms
 encoder.setQuality(10); // image quality. 10 is default.
 
 // use node-canvas
-var canvas = new Canvas(320, 240);
-var ctx = canvas.getContext('2d');
+const canvas = createCanvas(320, 240);
+const ctx = canvas.getContext('2d');
 
 // red rectangle
 ctx.fillStyle = '#ff0000';

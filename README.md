@@ -17,12 +17,12 @@ $ npm install gifencoder
 You can also stream writes of pixel data (or canvas contexts) to the encoder:
 
 ``` js
-var GIFEncoder = require('gifencoder');
-var encoder = new GIFEncoder(854, 480);
-var pngFileStream = require('png-file-stream');
-var fs = require('fs');
+const GIFEncoder = require('gifencoder');
+const encoder = new GIFEncoder(854, 480);
+const pngFileStream = require('png-file-stream');
+const fs = require('fs');
 
-var stream = pngFileStream('test/**/frame?.png')
+const stream = pngFileStream('test/**/frame?.png')
   .pipe(encoder.createWriteStream({ repeat: -1, delay: 500, quality: 10 }))
   .pipe(fs.createWriteStream('myanimated.gif'));
 
@@ -45,11 +45,11 @@ data (either an array or Buffer), or a canvas 2D `context`.
 You can also use a streaming API to receive data:
 
 ``` js
-var GIFEncoder = require('gifencoder');
-var Canvas = require('canvas');
-var fs = require('fs');
+const GIFEncoder = require('gifencoder');
+const { createCanvas } = require('canvas');
+const fs = require('fs');
 
-var encoder = new GIFEncoder(320, 240);
+const encoder = new GIFEncoder(320, 240);
 // stream the results as they are available into myanimated.gif
 encoder.createReadStream().pipe(fs.createWriteStream('myanimated.gif'));
 
@@ -59,8 +59,8 @@ encoder.setDelay(500);  // frame delay in ms
 encoder.setQuality(10); // image quality. 10 is default.
 
 // use node-canvas
-var canvas = new Canvas(320, 240);
-var ctx = canvas.getContext('2d');
+const canvas = createCanvas(320, 240);
+const ctx = canvas.getContext('2d');
 
 // red rectangle
 ctx.fillStyle = '#ff0000';
