@@ -56,7 +56,7 @@ encoder.createReadStream().pipe(fs.createWriteStream('myanimated.gif'));
 encoder.start();
 encoder.setRepeat(0);   // 0 for repeat, -1 for no-repeat
 encoder.setDelay(500);  // frame delay in ms
-encoder.setQuality(10); // image quality. 10 is default.
+encoder.setQuality(10); // image quality (1-30). 1 is best but slow. Above 20 doesn't make much difference in speed. 10 is default.
 
 // use node-canvas
 const canvas = createCanvas(320, 240);
